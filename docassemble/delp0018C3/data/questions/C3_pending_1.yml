@@ -1,0 +1,73 @@
+include:
+  - GDP_c3_data.yml
+---
+variable name: GDPquestions
+use objects: True
+data:
+  - GDPquestion: Is the information below correct for Lebron?
+    GDPchoices:
+      - First name:Lebron
+      - Last name:James
+      - Age:23
+      - Hobbies:Basketball
+      - Likes pets?:True
+  - GDPquestion: Is the information below correct for Michael?
+    GDPchoices:
+      - First name:Michael
+      - Last name:Jordan
+      - Age:23
+      - Hobbies:Golf
+      - Likes pets?:True
+  - GDPquestion: Is the information below correct for Wilt
+    GDPchoices:
+      - First name:Wilt
+      - Last name:Chamberlain
+      - Age:13
+      - Hobbies:Sports
+      - Likes pets?:False
+  - GDPquestion: Is the information below correct for Kobe?
+    GDPchoices:
+      - First name:Kobe
+      - Last name:Bryant
+      - Age:24
+      - Hobbies:Music
+      - Likes pets?:False
+  - GDPquestion: Is the information below correct for Giannis?
+    GDPchoices:
+      - First name:Giannis
+      - Last name:Antetokounmpo
+      - Age:34
+      - Hobbies:Travelling
+      - Likes pets?:True
+---
+mandatory: True
+question: Confirmed Data
+subquestion: |
+  #### Here is the result of your checkbox selection
+  
+  ${ GDPquestion_table }
+  
+attachment:
+  docx template file: C3_Jinja.docx
+  valid formats:
+    - pdf
+    
+buttons:
+  - Exit: exit
+  - Restart: restart
+---
+table: GDPquestion_table
+rows:  GDPquestions
+columns:
+  - Question: |
+      row_item['GDPquestion']
+  - Correct Data: |
+      row_item['GDPanswers'].true_values()
+---
+question: |
+  ${ GDPquestions[i]['GDPquestion'] }
+fields:
+  - no label: GDPquestions[i]['GDPanswers']
+    datatype: checkboxes
+    code: GDPquestions[i]['GDPchoices']
+---

@@ -1,0 +1,70 @@
+---
+variable name: GDPperson_info
+use objects: True
+data:
+   - First name: Lebron
+     Last name: James
+     Age: 23
+     Hobbies: Basketball
+     Do you like pets?: True
+   - First name: Michael
+     Last name: Jordan
+     Age: 23
+     Hobbies: Golf
+     Do you like pets?: True
+   - First name: Wilt
+     Last name: Chamberlain
+     Age: 13
+     Hobbies: Sports
+     Do you like pets?: False
+   - First name: Kobe
+     Last name: Bryant
+     Age: 24
+     Hobbies: Music
+     Do you like pets?: False
+   - First name: Giannis
+     Last name: Antetokounmpo
+     Age: 34
+     Hobbies: Travelling
+     Do you like pets?: True
+---
+mandatory: True
+question: |
+subquestion: |
+  ## Personal Information
+  
+  ${GDPcolumn_header}
+  ${GDPdashes}
+  %for GDPitem in GDPtable_rows:
+  ${GDPitem}
+  %endfor
+  
+  **Please confirm if the information displayed above is accurate.**
+  
+buttons:
+  - Proceed: continue
+  - Exit: exit
+---
+code: |
+  GDPcolumn_header = ""
+  
+  for GDPitem in GDPperson_info[0]:
+    GDPcolumn_header += GDPitem + '|'
+
+  GDPcolumn_header = GDPcolumn_header[:-1]
+---
+code: |
+  GDPdashes = "---"
+  for i in range(len(GDPperson_info[0]) - 1):
+    GDPdashes += "|---"
+---
+code: |
+  GDPtable_rows = []
+  
+  for GDPitem in GDPperson_info:
+    MDrow = ""
+    for GDPkey in GDPitem:
+      MDrow += str(GDPitem[GDPkey]) + '|'
+    MDrow = MDrow[:-1]
+    GDPtable_rows.append(MDrow)
+---
